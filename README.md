@@ -1,4 +1,4 @@
-# keskustelusovellus
+# Keskustelusovellus
 Sovelluksessa on alue, jossa on keskustelu aiheita. Näillä aiheilla käyttäjät voivat luoda keskusteluketjuja. Käyttäjät voivat vastata keskusteluketjuun viesteillä. Käyttäjät ovat joko tavallisia käyttäjiä tai ylläpitäjiä.
 
 Sovelluksen ominaisuudet:
