@@ -4,7 +4,7 @@ Sovelluksessa on alue, jossa on keskustelu aiheita. Näillä aiheilla käyttäj�
 Sovelluksen ominaisuudet:
 * Käyttäjät voivat luoda tunnuksen ja kirjautua sisään tunnuksella.
 * Sovelluksen etusivulla käyttäjä voi kirjautua sisään tai luoda tunnuksen, jonka jälkeen käyttäjä pääsee sivulle, jossa on keskustelujen aiheet.
-* Jokaisessa keskustelualueessa on otsikko, ja ketjujen ja viestien määrä.
+* Jokaisessa keskusteluaiheella on otsikko, ja ketjujen ja viestien määrä.
 * Ylläpitäjät voivat luoda uusia aiheita.
 * Käyttäjät voivat luoda uusia ketjuja.
 * Käyttäjät voivat vastata viesteillä keskusteluketjuihin.
