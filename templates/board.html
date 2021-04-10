@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <h1>{{ title }}</h1>
 {% if session.username %}
-Vastaa keskusteluun:
 <form action="/{{ id }}/newthread" method="POST">
     <h4>Luo uusi keskustelu:</h4>
     Otsikko: <input type="text" name="title"><br>
