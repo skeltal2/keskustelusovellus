@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{% if session.username %}
+<p>Olet kirjautunut nimellä {{ session.username }}</p>
+<a href="/main">Katso keskusteluja</a> <br>
+<a href="/logout">Kirjaudu ulos</a>
+{% else %}
+<p>Et ole kirjautunut sisään</p>
+<h2>Kirjaudu sisään</h2>
+<form action="/login" method="POST">
+    <p>Tunnus:<br>
+        <input type="text" name="username"></p>
+    <p>Salasana:<br>
+        <input type="password" name="password"></p>
+        <input type="submit" value="Kirjaudu sisään">
+</form>
+{% if failedlogin %}
+<p><span style="color:red">Väärä käyttäjätunnus tai salasana!</span></p>
+{% endif %}
+<p></p>
+<h2>Luo uusi tunnus</h2>
+<form action="/newuser" method="POST">
+    <p>Tunnus:<br>
+        <input type="text" name="new_username"></p>
+    <p>Salasana:<br>
+        <input type="password" name="new_password"></p>
+        <input type="submit" value="Luo uusi tunnus">
+{% if usernametaken %}
+<p><span style="color:red">Käyttäjätunnus on jo olemassa!</span></p>
+{% endif %}
+<p></p>
+<hr>
+<a href="/main">Katso keskusteluja kirjautumatta sisään</a>
+{% endif %}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<a href="/main/{{ board_id }}">Poistu keskustelusta</a>
+<br>
+<h1> {{ thread_title }} </h1>
+{{ thread_content }} <br>
+<br>
+<span style="font-size:small">Luoja: {{ thread_username }} @ {{ thread_time }} | ID: {{ thread_id }} | Vastauksia: {{ reply_count }}</span> <br>
+<hr>
+{% for message in messages %}
+<span style="font-size:small">{{ message[0][0] }} | {{ message[1][0] }} @ {{ message[0][4] }}:</span> <br>
+<br>
+{{ message[0][1] }}
+{% if admin %}
+<form action="/deletereply" method="POST">
+    <input type="text" name="message_id" value="{{ message[0][0] }}" hidden="True">
+    <input type="text" name="thread_id" value="{{ thread_id }}" hidden="True">
+    <input type="text" name="board_id" value="{{ board_id }}" hidden="True">
+    <input type="submit" value="(Ylläpitäjä) Poista vastaus">
+</form>
+{% endif %}
+<hr>
+{% endfor %}
+Vastaa keskusteluun:
+<form action="/reply" method="POST">
+    <input type="text" name="thread_id" value="{{ thread_id }}" hidden="True">
+    <input type="text" name="board_id" value="{{ board_id }}" hidden="True">
+    <textarea name="content" rown="10" cols="80"></textarea><br>
+    <input type="submit" value="Vastaa">
+</form>

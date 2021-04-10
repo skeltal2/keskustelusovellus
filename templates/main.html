@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<h1>Keskustelualueet</h1>
+{% if session.username %}
+<p>Olet kirjautunut nimellä {{ session.username }}</p>
+<a href="/logout">Kirjaudu ulos</a>
+{% else %}
+<p>Et ole kirjautunut sisään, <a href="/">siirry etusivulle</a></p>
+{% endif %}
+{% if admin %}
+<form action="/newboard" method="POST">
+    <p>(Ylläpitäjä) Luo uusi alue:<br>
+        <input type="text" name="title"></p>
+        <input type="submit" value="Luo uusi alue">
+</form>
+{% endif %}
+<br>
+<hr>
+{% for board in boards %}
+<span style="font-size:x-large">{{ board[1] }}</span> <br>
+<a href="/main/{{ board[0] }}">Siirry alueelle</a> <br>
+<hr>
+{% endfor %}

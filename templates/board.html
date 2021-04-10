@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<h1>{{ title }}</h1>
+<form action="/{{ id }}/newthread" method="POST">
+    <h4>Luo uusi keskustelu:</h4>
+    Otsikko: <input type="text" name="title"><br>
+    Sisältö: <br>
+        <textarea name="content" rows="10" cols="80"></textarea><br>
+    <input type="submit" value="Luo uusi keskustelu">
+</form>
+<p>
+<a href="/main">Poistu keskustelualueelta</a>
+<hr>
+{% for thread in threads %}
+<h3>{{ thread[0][1] }}</h3>
+{{ thread[0][2] }} <p>
+<a href="/main/{{ id }}/{{ thread[0][0] }}">Avaa keskustelu</a> <br>
+<span style="font-size:small">Luoja: {{ thread[2] }} @ {{ thread[0][5] }} | ID: {{ thread[0][0]}} | Vastauksia: {{ thread[1] }} </span> <br>
+{% if admin %}
+<form action="/deletethread" method="POST">
+    <input type="text" name="thread_id" value="{{ thread[0][0] }}" hidden="True">
+    <input type="text" name="board_id" value="{{ id }}" hidden="True">
+    <input type="submit" value="(Ylläpitäjä) Poista keskustelu">
+</form>
+{% endif %}
+<hr>
+{% endfor %}
