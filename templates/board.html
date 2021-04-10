@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <h1>{{ title }}</h1>
+{% if session.username %}
+Vastaa keskusteluun:
 <form action="/{{ id }}/newthread" method="POST">
     <h4>Luo uusi keskustelu:</h4>
     Otsikko: <input type="text" name="title"><br>
@@ -7,6 +9,9 @@
         <textarea name="content" rows="10" cols="80"></textarea><br>
     <input type="submit" value="Luo uusi keskustelu">
 </form>
+{% else %}
+<p>Et ole kirjautunut sisään, <a href="/">siirry etusivulle</a></p>
+{% endif %}
 <p>
 <a href="/main">Poistu keskustelualueelta</a>
 <hr>
