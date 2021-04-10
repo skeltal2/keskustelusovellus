@@ -1,5 +1,7 @@
-Sovellus on testattavissa osoitteessa [https://joelw-keskustelusovellus.herokuapp.com/](https://joelw-keskustelusovellus.herokuapp.com/).
-## Nykyinen tilanne
+Sovellus on testattavissa osoitteessa [https://joelw-keskustelusovellus.herokuapp.com/](https://joelw-keskustelusovellus.herokuapp.com/)
+Sovelluksessa on tällä hetkellä vain yksi ylläpitäjä (käyttäjänimi: admin, salasana: admin)
+
+### Nykyinen tilanne
 * Käyttäjät voivat luoda tunnuksen ja kirjautua sisään tunnuksella.
 * Sovelluksen etusivulla käyttäjä voi kirjautua sisään tai luoda tunnuksen, jonka jälkeen käyttäjä pääsee sivulle, jossa on keskustelujen aiheet.
 * Ylläpitäjät voivat luoda uusia aiheita.
