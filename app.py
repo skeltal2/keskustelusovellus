@@ -10,15 +10,18 @@ app.secret_key = getenv("SECRET_KEY")
 
 db = SQLAlchemy(app)
 
+# Show error message on frontpage if failed login or username was taken
 failed_login = False
 user_name_taken = False
 
+# Frontpage
 @app.route("/")
 def index():
     return render_template("index.html", failedlogin = failed_login, usernametaken = user_name_taken)
 
-# LOGIN AND USER CREATION
+### LOGIN AND USER CREATION
 
+# Login
 @app.route("/login", methods=["POST"])
 def login():
     username = request.form["username"]
@@ -32,7 +35,8 @@ def login():
     global failed_login
     failed_login = False
 
-    # Is password correct?
+    # If password incorrect, set failed_login to True and return to frontpage
+    # Else move to main page
     if user == None:
         del session["username"]
         failed_login = True
@@ -46,6 +50,7 @@ def login():
             del session["username"]
             return redirect("/")
 
+# Logout
 @app.route("/logout")
 def logout():
     del session["username"]
@@ -58,11 +63,13 @@ def logout():
 
     return redirect("/")
 
+# Create new user
 @app.route("/newuser", methods=["POST"])
 def newuser():
     username = request.form["new_username"]
     password = request.form["new_password"]
 
+    # Password cannot be empty
     if password == "":
         return redirect("/")
 
@@ -71,7 +78,8 @@ def newuser():
     global user_name_taken
     user_name_taken = False
 
-    # Is username taken?
+    # If username taken, set user_name_taken to True nad return to frontpage
+    # Else move to main page
     try:
         hash_value = generate_password_hash(password)
         sql = "INSERT INTO users (username, password, admin) VALUES (:username,:password,:admin)"
@@ -83,8 +91,9 @@ def newuser():
         user_name_taken = True
         return redirect("/")
 
-# BOARD MANAGEMENT
+### BOARD MANAGEMENT
 
+# Main page for boards
 @app.route("/main")
 def main():
     sql = "SELECT * FROM boards"
@@ -104,6 +113,7 @@ def main():
 
     return render_template("main.html", boards = boards, admin = admin)
 
+# Manage threads and create page for a board
 @app.route("/main/<int:id>")
 def board(id):
     # Is current user admin?
@@ -117,23 +127,26 @@ def board(id):
     else:
         admin = False
 
+    # Find title and id
     sql = "SELECT id, title FROM boards WHERE id=:id AND hidden = 0"
     result = db.session.execute(sql, {"id":id}).fetchone()
 
     try:
-        # If board does not exist, return 404 error
+        # Set title and id for a board
         board_id = result[0]
         title = result[1]
     except:
+        # If board does not exist, return 404 error
         return abort(404)
 
+    # Find every thread on this board
     sql = "SELECT * FROM threads WHERE board_id=:board_id AND hidden = 0 ORDER BY id DESC"
     result = db.session.execute(sql, {"board_id":id})
     thread_data = result.fetchall()
 
     threads = []
 
-    # Get uername and reply count
+    # Get username and reply count
     for i in thread_data:
         sql = "SELECT COUNT(messages.id) FROM threads LEFT JOIN messages ON threads.id = messages.thread_id WHERE threads.id=:thread_id AND messages.hidden = 0;"
         result = db.session.execute(sql, {"thread_id":i[0]}).fetchone()[0]
@@ -141,12 +154,14 @@ def board(id):
         sql = "SELECT username FROM users WHERE id=:user_id"
         username = db.session.execute(sql, {"user_id":i[3]}).fetchone()[0]
 
+        # Combine each thread's data with it's reply count and username
         threads.append((i, result, username))
 
     return render_template(
         "board.html", title = title, threads = threads, id = board_id, admin = admin
         )
 
+# Create new board
 @app.route("/newboard", methods=["POST"])
 def newboard():
     title = request.form["title"]
@@ -157,10 +172,9 @@ def newboard():
 
     return redirect("/main")
 
-#@app.route("/deleteboard", methods=["POST"])
+### THREAD MANAGEMENT
 
-# THREAD MANAGEMENT
-
+# Create new thread
 @app.route("/<int:id>/newthread", methods=["POST"])
 def newthread(id):
     title = request.form["title"]
@@ -174,6 +188,7 @@ def newthread(id):
 
     return redirect(f"/main/{board_id}")
 
+# Manage messages and create page for a thread
 @app.route("/main/<int:board_id>/<int:thread_id>")
 def thread(board_id, thread_id):
     # Is current user admin?
@@ -187,17 +202,19 @@ def thread(board_id, thread_id):
     else:
         admin = False
 
+    # Find and assign this thread's data
     sql = "SELECT * FROM threads WHERE id=:thread_id"
     result = db.session.execute(sql, {"thread_id":thread_id}).fetchall()[0]
 
-    # Data for threads
     thread_title = result[1]
     thread_content = result[2]
     thread_time = result[5]
 
+    # Find thread's reply count
     sql = "SELECT COUNT(messages.id) FROM threads LEFT JOIN messages ON threads.id = messages.thread_id WHERE threads.id=:thread_id AND messages.hidden = 0;"
     reply_count = db.session.execute(sql, {"thread_id":thread_id}).fetchone()[0]
 
+    # Find thread's creator
     sql = "SELECT username FROM users WHERE id=:id"
     thread_username = db.session.execute(sql, {"id":result[3]}).fetchone()[0]
 
@@ -220,6 +237,7 @@ def thread(board_id, thread_id):
         messages = messages, reply_count = reply_count, admin = admin
         )
 
+# Delete thread
 @app.route("/deletethread", methods=["POST"])
 def deletethread():
     thread_id = request.form["thread_id"]
@@ -231,8 +249,9 @@ def deletethread():
 
     return redirect("/main/" + str(board_id) )
 
-# MESSAGE MANAGEMENT
+### MESSAGE MANAGEMENT
 
+# Create new reply
 @app.route("/reply", methods=["POST"])
 def reply():
     board_id = request.form["board_id"]
@@ -247,6 +266,7 @@ def reply():
 
     return redirect(f"/main/{board_id}/{thread_id}")
 
+# Delete reply
 @app.route("/deletereply", methods=["POST"])
 def deletereply():
     message_id = request.form["message_id"]
