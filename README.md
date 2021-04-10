@@ -1,3 +1,4 @@
+# Keskustelusovellus
 Sovellus on testattavissa osoitteessa [https://joelw-keskustelusovellus.herokuapp.com/](https://joelw-keskustelusovellus.herokuapp.com/)
 
 Sovelluksessa on tällä hetkellä yksi ylläpitäjä (käyttäjänimi: admin, salasana: admin)
@@ -11,7 +12,7 @@ Sovelluksessa on tällä hetkellä yksi ylläpitäjä (käyttäjänimi: admin, s
 * Käyttäjät voivat vastata viesteillä keskusteluketjuihin.
 * Ylläpitäjät voivat poistaa ketjuja ja viestejä.
 
-# Keskustelusovellus
+### Keskeiset toiminnot
 Sovelluksessa on alue, jossa on keskustelu aiheita. Näillä aiheilla käyttäjät voivat luoda keskusteluketjuja. Käyttäjät voivat vastata keskusteluketjuun viesteillä. Käyttäjät ovat joko tavallisia käyttäjiä tai ylläpitäjiä.
 
 Sovelluksen ominaisuudet:
