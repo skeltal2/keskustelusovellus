@@ -1,3 +1,5 @@
+Sovellus on testattavissa osoitteessa (https://joelw-keskustelusovellus.herokuapp.com/)[https://joelw-keskustelusovellus.herokuapp.com/]
+
 # Keskustelusovellus
 Sovelluksessa on alue, jossa on keskustelu aiheita. Näillä aiheilla käyttäjät voivat luoda keskusteluketjuja. Käyttäjät voivat vastata keskusteluketjuun viesteillä. Käyttäjät ovat joko tavallisia käyttäjiä tai ylläpitäjiä.
 
