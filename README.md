@@ -6,6 +6,7 @@ Sovelluksessa on tällä hetkellä yksi ylläpitäjä (käyttäjänimi: admin, s
 ### Nykyinen tilanne
 * Käyttäjät voivat luoda tunnuksen ja kirjautua sisään tunnuksella.
 * Käyttäjä voi katsoa keskusteluja kirjautumatta sisään
+* Ylläpitäjät voivat lisää ja poistaa muita ylläpitäjiä
 * Sovelluksen etusivulla käyttäjä voi kirjautua sisään tai luoda tunnuksen, jonka jälkeen käyttäjä pääsee sivulle, jossa on keskustelujen aiheet.
 * Ylläpitäjät voivat luoda ja poistaa aiheita.
 * Jokaisessa keskusteluaiheella on otsikko ja ketjujen määrä.
