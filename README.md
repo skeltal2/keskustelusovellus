@@ -7,9 +7,11 @@ Sovelluksessa on tällä hetkellä yksi ylläpitäjä (käyttäjänimi: admin, s
 * Käyttäjät voivat luoda tunnuksen ja kirjautua sisään tunnuksella.
 * Käyttäjä voi katsoa keskusteluja kirjautumatta sisään
 * Sovelluksen etusivulla käyttäjä voi kirjautua sisään tai luoda tunnuksen, jonka jälkeen käyttäjä pääsee sivulle, jossa on keskustelujen aiheet.
-* Ylläpitäjät voivat luoda uusia aiheita.
+* Ylläpitäjät voivat luoda ja poistaa aiheita.
 * Käyttäjät voivat luoda uusia ketjuja.
 * Käyttäjät voivat vastata viesteillä keskusteluketjuihin.
+* Käyttäjät voivat muokata omia viestejään.
+* Ylläpitäjät voivat muokata kaikkia viestejä
 * Ylläpitäjät voivat poistaa ketjuja ja viestejä.
 
 ### Keskeiset toiminnot
