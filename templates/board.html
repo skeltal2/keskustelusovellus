@@ -18,11 +18,11 @@
 <h3>{{ thread[0][1] }}</h3>
 {{ thread[0][2] }} <p>
 <a href="/main/{{ id }}/{{ thread[0][0] }}">Avaa keskustelu</a> <br>
-<span style="font-size:small">Luoja: {{ thread[2] }} @ {{ thread[0][5] }} | ID: {{ thread[0][0]}} | Vastauksia: {{ thread[1] }} </span> <br>
+<span style="font-size:small">Luoja: {{ thread[2] }} @ {{ thread[3] }} | ID: {{ thread[0][0]}} | Vastauksia: {{ thread[1] }} </span> <br>
 {% if admin %}
 <form action="/deletethread" method="POST">
-    <input type="text" name="thread_id" value="{{ thread[0][0] }}" hidden="True">
-    <input type="text" name="board_id" value="{{ id }}" hidden="True">
+    <input type="hidden" name="thread_id" value="{{ thread[0][0] }}">
+    <input type="hidden" name="board_id" value="{{ id }}">
     <input type="submit" value="(Ylläpitäjä) Poista keskustelu">
 </form>
 {% endif %}

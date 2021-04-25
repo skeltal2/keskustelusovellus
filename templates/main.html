@@ -18,5 +18,12 @@
 {% for board in boards %}
 <span style="font-size:x-large">{{ board[1] }}</span> <br>
 <a href="/main/{{ board[0] }}">Siirry alueelle</a> <br>
+<p>Keskusteluja: {{ board[2] }}</p>
+{% if admin %}
+<form action="/delboard" method="POST">
+    <input type="hidden" name="board_id" value="{{ board[0] }}">
+    <input type="submit" value="(Ylläpitäjä) Poista alue">
+</form>
+{% endif %}
 <hr>
 {% endfor %}

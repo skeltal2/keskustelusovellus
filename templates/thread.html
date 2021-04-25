@@ -7,25 +7,30 @@
 <span style="font-size:small">Luoja: {{ thread_username }} @ {{ thread_time }} | ID: {{ thread_id }} | Vastauksia: {{ reply_count }}</span> <br>
 <hr>
 {% for message in messages %}
-<span style="font-size:small">{{ message[0][0] }} | {{ message[1][0] }} @ {{ message[0][4] }}:</span> <br>
+<span style="font-size:small">{{ message[0][0] }} | {{ message[1][0] }} @ {{ message[2] }}:</span> <br>
 <br>
-{{ message[0][1] }}
+{{ message[0][1] }} <br>
+<br>
+{% if session.username == message[1][0] or admin %}
+<a href="/editreply/{{ message[0][0] }}">Muokkaa vastausta
+</a>
+{% endif %}
 {% if admin %}
 <form action="/deletereply" method="POST">
-    <input type="text" name="message_id" value="{{ message[0][0] }}" hidden="True">
-    <input type="text" name="thread_id" value="{{ thread_id }}" hidden="True">
-    <input type="text" name="board_id" value="{{ board_id }}" hidden="True">
+    <input type="hidden" name="message_id" value="{{ message[0][0] }}">
+    <input type="hidden" name="thread_id" value="{{ thread_id }}">
+    <input type="hidden" name="board_id" value="{{ board_id }}">
     <input type="submit" value="(Ylläpitäjä) Poista vastaus">
 </form>
 {% endif %}
 <hr>
 {% endfor %}
 {% if session.username %}
-Vastaa keskusteluun:
 <form action="/reply" method="POST">
-    <input type="text" name="thread_id" value="{{ thread_id }}" hidden="True">
-    <input type="text" name="board_id" value="{{ board_id }}" hidden="True">
-    <textarea name="content" rown="10" cols="80"></textarea><br>
+    <label for="content">Vastaa keskusteluun:</label><br>
+    <input type="hidden" name="thread_id" value="{{ thread_id }}">
+    <input type="hidden" name="board_id" value="{{ board_id }}">
+    <textarea name="content" rows="5" cols="80"></textarea><br>
     <input type="submit" value="Vastaa">
 </form>
 {% else %}
