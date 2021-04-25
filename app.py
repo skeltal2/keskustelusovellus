@@ -100,32 +100,14 @@ def main():
     result = db.session.execute(sql)
     board_data = result.fetchall()
 
-    # Is current user admin?
-    if session:
-        sql = "SELECT admin FROM users WHERE username =:username;"
-        result = db.session.execute(sql, {"username":session["username"]})
-        if result.fetchone()[0] == 1:
-            admin = True
-        else:
-            admin = False
-    else:
-        admin = False
+    admin = is_admin()
 
     return render_template("main.html", boards = board_data, admin = admin)
 
 # Manage threads and create page for a board
 @app.route("/main/<int:id>")
 def board(id):
-    # Is current user admin?
-    if session:
-        sql = "SELECT admin FROM users WHERE username =:username;"
-        result = db.session.execute(sql, {"username":session["username"]})
-        if result.fetchone()[0] == 1:
-            admin = True
-        else:
-            admin = False
-    else:
-        admin = False
+    admin = is_admin()
 
     # Find title and id
     sql = "SELECT id, title FROM boards WHERE id=:id AND hidden = 0;"
@@ -208,16 +190,7 @@ def newthread(id):
 # Manage messages and create page for a thread
 @app.route("/main/<int:board_id>/<int:thread_id>")
 def thread(board_id, thread_id):
-    # Is current user admin?
-    if session:
-        sql = "SELECT admin FROM users WHERE username =:username;"
-        result = db.session.execute(sql, {"username":session["username"]})
-        if result.fetchone()[0] == 1:
-            admin = True
-        else:
-            admin = False
-    else:
-        admin = False
+    admin = is_admin()
 
     # Find and assign this thread's data
     sql = "SELECT * FROM threads WHERE id=:thread_id;"
@@ -307,17 +280,9 @@ def deletereply():
 # Edit reply
 @app.route("/editreply/<int:message_id>")
 def editreply(message_id):
-    # Is current user admin?
-    if session:
-        sql = "SELECT admin FROM users WHERE username =:username;"
-        result = db.session.execute(sql, {"username":session["username"]})
-        if result.fetchone()[0] == 1:
-            admin = True
-        else:
-            admin = False
-    else:
-        admin = False
-        
+    admin = is_admin()
+    
+    # Check if message exists
     sql = "SELECT user_id, thread_id FROM messages WHERE id=:message_id;"
     try:
         result = db.session.execute(sql, {"message_id":message_id}).fetchone()
@@ -355,3 +320,43 @@ def updatereply():
     db.session.commit()
 
     return redirect(f"/main/{board_id}/{thread_id}")
+
+### USER MANAGEMENT
+
+@app.route("/users")
+def users():
+    if not is_admin():
+        return redirect("/")
+    else:
+        sql = "SELECT * FROM users ORDER BY id;"
+        user_data = db.session.execute(sql).fetchall()
+
+        return render_template("users.html", user_data = user_data)
+
+@app.route("/makeadmin", methods=["POST"])
+def makeadmin():
+    user_id = request.form["user_id"]
+    status = db.session.execute("SELECT admin FROM users WHERE id=:user_id;", {"user_id":user_id}).fetchone()[0]
+
+    if status == 0:
+        db.session.execute("UPDATE users SET admin = 1 WHERE id=:user_id;", {"user_id":user_id})
+        db.session.commit()
+    else:
+        db.session.execute("UPDATE users SET admin = 0 WHERE id=:user_id;", {"user_id":user_id})
+        db.session.commit()
+
+    return redirect("/users")
+
+### OTHER
+
+# Check if user is admin
+def is_admin():
+    if session:
+        sql = "SELECT admin FROM users WHERE username =:username;"
+        result = db.session.execute(sql, {"username":session["username"]})
+        if result.fetchone()[0] == 1:
+            return True
+        else:
+            return False
+    else:
+        return False

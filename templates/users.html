@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<a href="/main">Takaisin</a>
+{% for user in user_data %}
+<p>ID: {{ user[0] }} | Username: {{ user[1] }} | Ylläpitäjä: {{ user[3] }}</p>
+{% if session.username != user[1] %}
+<form action="/makeadmin" method="POST">
+    <input type="hidden" name="user_id" value="{{ user[0] }}">
+    <input type="submit" value="Lisää/Poista ylläpitäjä">
+</form>
+{% else %}
+-
+{% endif %}
+<hr>
+{% endfor %}
