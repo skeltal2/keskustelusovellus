@@ -1,9 +1,17 @@
 <!DOCTYPE html>
-<form action="/updatereply" method="POST">
-    <label for="content">Muokkaa vastausta:</label><br>
-    <textarea name="content" rows="15" cols="80">{{ message }}</textarea><br>
-    <input type="submit" value="Muokkaa">
-    <input type="hidden" name="board_id" value="{{ board_id }}">
-    <input type="hidden" name="thread_id" value="{{ thread_id }}">
-    <input type="hidden" name="message_id" value="{{ message_id }}">
-</form>
+<head>
+    <link rel="stylesheet" href="../static/editreply.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div class="grid-container">
+        <form action="/updatereply" method="POST" class="edit">
+            <label for="content">Muokkaa vastausta:</label><br>
+            <textarea name="content" rows="15" cols="80" class="content">{{ message }}</textarea><br>
+            <input type="submit" value="Muokkaa" id="button">
+            <input type="hidden" name="board_id" value="{{ board_id }}">
+            <input type="hidden" name="thread_id" value="{{ thread_id }}">
+            <input type="hidden" name="message_id" value="{{ message_id }}">
+        </form>
+    </div>
+</body>

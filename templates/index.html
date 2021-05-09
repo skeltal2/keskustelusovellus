@@ -1,33 +1,56 @@
 <!DOCTYPE html>
-{% if session.username %}
-<p>Olet kirjautunut nimellä {{ session.username }}</p>
-<a href="/main">Katso keskusteluja</a> <br>
-<a href="/logout">Kirjaudu ulos</a>
-{% else %}
-<p>Et ole kirjautunut sisään</p>
-<h2>Kirjaudu sisään</h2>
-<form action="/login" method="POST">
-    <p>Tunnus:<br>
-        <input type="text" name="username"></p>
-    <p>Salasana:<br>
-        <input type="password" name="password"></p>
-        <input type="submit" value="Kirjaudu sisään">
-</form>
-{% if failedlogin %}
-<p><span style="color:red">Väärä käyttäjätunnus tai salasana!</span></p>
-{% endif %}
-<p></p>
-<h2>Luo uusi tunnus</h2>
-<form action="/newuser" method="POST">
-    <p>Tunnus:<br>
-        <input type="text" name="new_username"></p>
-    <p>Salasana:<br>
-        <input type="password" name="new_password"></p>
-        <input type="submit" value="Luo uusi tunnus">
-{% if usernametaken %}
-<p><span style="color:red">Käyttäjätunnus on jo olemassa!</span></p>
-{% endif %}
-<p></p>
-<hr>
-<a href="/main">Katso keskusteluja kirjautumatta sisään</a>
-{% endif %}
+<head>
+    <link rel="stylesheet" href="static/index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <h1>Keskustelusovellus</h1>
+    {% if session.username %}
+        <p>Olet kirjautunut nimellä {{ session.username }}</p>
+        <a href="/main">Katso keskusteluja</a> <br>
+        <a href="/logout">Kirjaudu ulos</a>
+    {% else %}
+        <div class="grid-container">
+            <div class="login">
+                <form action="/login" method="POST">
+                    <h2>Kirjaudu sisään</h2>
+                    <label for="username">Käyttäjänimi:</label>
+                    <input type="text" name="username">
+                    <label for="password">Salasana:</label>
+                    <input type="password" name="password">
+                    <input id="button" type="submit" value="Kirjaudu sisään">
+                </form>
+            </div>
+            <div class="newuser">
+                <form action="/newuser" method="POST">
+                    <h2>Luo uusi tunnus</h2>
+                    <label for="new_username">Käyttäjänimi:</label>
+                    <input type="text" name="new_username">
+                    <label for="new_password">Salasana:</label>
+                    <input type="password" name="new_password">
+                    <input id="button" type="submit" value="Luo uusi tunnus">
+                </form>
+            </div>
+        </div>
+        <br>
+    <div class="main">
+        <a class="mainlink" href="/main">Katso keskusteluja kirjautumatta sisään</a>
+    <div>
+    <div class="usererror">
+        {% if usernametaken %}
+            <p><span style="color:red">Käyttäjätunnus on jo olemassa!</span></p>
+        {% endif %}
+        {% if passwordtooshort %}
+            <p><span style="color:red">Salasanan pitää olla vähintään viisi merkkiä!</span></p>
+        {% endif %}
+        {% if invalidusername %}
+            <p><span style="color:red">Käyttäjätunnus ei voi olla tyhjä tai sisältää välilyöntejä!</span></p>
+        {% endif %}
+    </div>
+    <div class="error">
+        {% if failedlogin %}
+            <p><span style="color:red">Väärä käyttäjätunnus tai salasana!</span></p>
+        {% endif %}
+    </div>
+    {% endif %}
+</body>

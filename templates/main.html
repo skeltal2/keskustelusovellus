@@ -1,30 +1,46 @@
 <!DOCTYPE html>
-<h1>Keskustelualueet</h1>
-{% if session.username %}
-<p>Olet kirjautunut nimellä {{ session.username }}</p>
-<a href="/logout">Kirjaudu ulos</a>
-{% else %}
-<p>Et ole kirjautunut sisään, <a href="/">siirry etusivulle</a></p>
-{% endif %}
-{% if admin %}
-<form action="/newboard" method="POST">
-    <p>(Ylläpitäjä) Luo uusi alue:<br>
-        <input type="text" name="title"></p>
-        <input type="submit" value="Luo uusi alue">
-</form><br>
-<a href="/users">(Ylläpitäjä) Hallitse käyttäjiä</a>
-{% endif %}
-<br>
-<hr>
-{% for board in boards %}
-<span style="font-size:x-large">{{ board[1] }}</span> <br>
-<a href="/main/{{ board[0] }}">Siirry alueelle</a> <br>
-<p>Keskusteluja: {{ board[2] }}</p>
-{% if admin %}
-<form action="/delboard" method="POST">
-    <input type="hidden" name="board_id" value="{{ board[0] }}">
-    <input type="submit" value="(Ylläpitäjä) Poista alue">
-</form>
-{% endif %}
-<hr>
-{% endfor %}
+<head>
+    <link rel="stylesheet" href="static/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div class="top">
+        <h1>Keskustelualueet</h1>
+        <div class="user_info">
+            {% if session.username %}
+                <p class="username">Olet kirjautunut nimellä {{ session.username }}</p>
+                <a class="index_link" href="/logout">Kirjaudu ulos</a>
+            {% else %}
+                <p class="username">Et ole kirjautunut sisään</p>
+                <a class="index_link" href="/">siirry etusivulle</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="grid-container">
+        {% if admin %}
+            <div class="admin_tools">
+                <form action="/newboard" method="POST">
+                    <label for="text">(Ylläpitäjä) Luo uusi alue:</label>
+                    <input type="text" name="title">
+                    <input type="submit" value="Luo uusi alue">
+                </form>
+                <a href="/users">(Ylläpitäjä) Hallitse käyttäjiä</a>
+            </div>
+        {% endif %}
+        {% for board in boards %}
+            <div class="board">
+                <span style="font-size:x-large" class="title">{{ board[1] }}</span>
+                <a class="board_link" href="/main/{{ board[0] }}">Siirry alueelle</a>
+                <p class="count">Keskusteluja: {{ board[2] }}</p>
+                {% if admin %}
+                    <div class="admin_delete">
+                        <form action="/delboard" method="POST">
+                            <input type="hidden" name="board_id" value="{{ board[0] }}">
+                            <input type="submit" value="(Ylläpitäjä) Poista alue">
+                        </form>
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</body>

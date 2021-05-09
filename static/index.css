@@ -1,0 +1,67 @@
+body {
+    margin: auto;
+    max-width: 60em;
+    font-family: "Consolas";
+    color: rgb(59, 37, 44);
+    background-color: rgb(227, 228, 219);
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 1em;
+    background-color: rgb(205, 205, 205);
+    border: 0.2em solid black;
+    border-radius: 1em;
+    padding: 2em;
+}
+
+.error {
+    grid-row: 2
+}
+
+.usererror {
+    grid-row: 2
+}
+
+a.mainlink:link, a.mainlink:visited {
+    grid-row: 2;
+    grid-column: 1;
+    background-color: rgb(143, 101, 147);
+    color: rgb(59, 37, 44);
+    text-decoration: none;
+    border: 0.2em solid black;
+    border-radius: 1em;
+    padding: 0.25em;
+    text-align: center;
+}
+
+a.mainlink:hover {
+    background-color: rgb(210, 163, 214);
+}
+
+form #button {
+    grid-row: 2;
+    grid-column: 1;
+    background-color: rgb(143, 101, 147);
+    color: rgb(59, 37, 44);
+    text-decoration: none;
+    font-family: "Consolas";
+    border: 0.2em solid black;
+    border-radius: 1em;
+    padding: 0.25em;
+    text-align: center;
+    grid-row: 6;
+}
+
+form #button:hover {
+    background-color: rgb(210, 163, 214);
+}
+
+form {
+    display: grid;
+    float: center;
+    padding: 0.5em;
+    grid-row-gap: 0.3em;
+    grid-template-rows: auto;
+}

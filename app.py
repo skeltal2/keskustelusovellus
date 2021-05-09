@@ -10,14 +10,19 @@ app.secret_key = getenv("SECRET_KEY")
 
 db = SQLAlchemy(app)
 
-# Show error message on frontpage if failed login or username was taken
+# Show error message on frontpage
 failed_login = False
 user_name_taken = False
+password_too_short = False
+invalid_username = False
 
 # Frontpage
 @app.route("/")
 def index():
-    return render_template("index.html", failedlogin = failed_login, usernametaken = user_name_taken)
+    return render_template(
+        "index.html", failedlogin = failed_login, usernametaken = user_name_taken,
+        passwordtooshort = password_too_short, invalidusername = invalid_username
+    )
 
 ### LOGIN AND USER CREATION
 
@@ -61,6 +66,12 @@ def logout():
     global user_name_taken
     user_name_taken = False
 
+    global password_too_short
+    password_too_short = False
+
+    global invalid_username
+    invalid_username = False
+
     return redirect("/")
 
 # Create new user
@@ -69,8 +80,20 @@ def newuser():
     username = request.form["new_username"]
     password = request.form["new_password"]
 
-    # Password cannot be empty
-    if password == "":
+    global invalid_username
+    invalid_username = False
+
+    # Username cannot be empty or contain spaces
+    if len(username) < 1 or " " in username:
+        invalid_username = True
+        return redirect("/")
+
+    global password_too_short
+    password_too_short = False
+
+    # Password must be longer than 5 characters
+    if len(password) <= 5:
+        password_too_short = True
         return redirect("/")
 
     session["username"] = username
@@ -78,7 +101,7 @@ def newuser():
     global user_name_taken
     user_name_taken = False
 
-    # If username taken, set user_name_taken to True nad return to frontpage
+    # If username taken, set user_name_taken to True and return to frontpage
     # Else move to main page
     try:
         hash_value = generate_password_hash(password)

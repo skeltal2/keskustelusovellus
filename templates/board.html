@@ -1,30 +1,44 @@
 <!DOCTYPE html>
-<h1>{{ title }}</h1>
-{% if session.username %}
-<form action="/{{ id }}/newthread" method="POST">
-    <h4>Luo uusi keskustelu:</h4>
-    Otsikko: <input type="text" name="title"><br>
-    Sisältö: <br>
-        <textarea name="content" rows="10" cols="80"></textarea><br>
-    <input type="submit" value="Luo uusi keskustelu">
-</form>
-{% else %}
-<p>Et ole kirjautunut sisään, <a href="/">siirry etusivulle</a></p>
-{% endif %}
-<p>
-<a href="/main">Poistu keskustelualueelta</a>
-<hr>
-{% for thread in threads %}
-<h3>{{ thread[0][1] }}</h3>
-{{ thread[0][2] }} <p>
-<a href="/main/{{ id }}/{{ thread[0][0] }}">Avaa keskustelu</a> <br>
-<span style="font-size:small">Luoja: {{ thread[2] }} @ {{ thread[3] }} | ID: {{ thread[0][0]}} | Vastauksia: {{ thread[1] }} </span> <br>
-{% if admin %}
-<form action="/deletethread" method="POST">
-    <input type="hidden" name="thread_id" value="{{ thread[0][0] }}">
-    <input type="hidden" name="board_id" value="{{ id }}">
-    <input type="submit" value="(Ylläpitäjä) Poista keskustelu">
-</form>
-{% endif %}
-<hr>
-{% endfor %}
+<head>
+    <link rel="stylesheet" href="../static/board.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div class="grid-container">
+        <h1>{{ title }}</h1>
+        <div class="new">
+            {% if session.username %}
+                <form action="/{{ id }}/newthread" method="POST" class="new_thread">
+                    <h4>Luo uusi keskustelu:</h4>
+                    <label for="title">Otsikko:</label>
+                    <input type="text" name="title">
+                    <label for="content">Sisältö:</label>
+                    <textarea name="content" rows="10"></textarea>
+                    <input type="submit" value="Luo uusi keskustelu" id="button">
+                </form>
+            {% else %}
+                <p>Et ole kirjautunut sisään, <a href="/">siirry etusivulle</a></p>
+            {% endif %}
+        </div>
+        <a href="/main" class="open_thread">Poistu keskustelualueelta</a>
+        <div class="threads">
+            {% for thread in threads %}
+            <div class="thread">
+                <h3>{{ thread[0][1] }}</h3>
+                <div class="content">
+                    {{ thread[0][2] }}
+                </div>
+                <a href="/main/{{ id }}/{{ thread[0][0] }}" class="open_thread">Avaa keskustelu</a>
+                <span style="font-size:small" class="data">Luoja: <u><b>{{ thread[2] }}</b></u> @ {{ thread[3] }} | ID: {{ thread[0][0]}} | Vastauksia: {{ thread[1] }}</span>
+                {% if admin %}
+                    <form action="/deletethread" method="POST" class="admin_form">
+                        <input type="hidden" name="thread_id" value="{{ thread[0][0] }}">
+                        <input type="hidden" name="board_id" value="{{ id }}">
+                        <input type="submit" value="(Ylläpitäjä) Poista keskustelu">
+                    </form>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>

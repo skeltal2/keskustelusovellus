@@ -1,0 +1,123 @@
+body {
+    margin: auto;
+    max-width: 60em;
+    font-family: "Consolas";
+    color: rgb(59, 37, 44);
+    background-color: rgb(227, 228, 219);
+}
+
+.grid-container {
+    display: grid;
+    grid-template-rows: auto;
+    gap: 1em;
+    margin: 1em;
+}
+
+.thread_data {
+    background-color: rgb(205, 205, 205);
+    border: 0.2em solid black;
+    border-radius: 1em;
+    padding: 1em;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    word-wrap: break-word;
+}
+
+.messages {
+    background-color: rgb(205, 205, 205);
+    border: 0.2em solid black;
+    border-radius: 1em;
+    padding: 1em;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+}
+
+.message {
+    border: 0.2em solid black;
+    background-color: rgb(174, 164, 191);
+    border-radius: 1em;
+    padding: 1em;
+    margin: 1em;
+    display: grid;
+    gap: 0.5em;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    word-wrap: break-word;
+}
+
+.reply {
+    background-color: rgb(205, 205, 205);
+    border: 0.2em solid black;
+    border-radius: 1em;
+    padding: 1em;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+}
+
+.edit_button:link, .edit_button:visited {
+    background-color: rgb(143, 101, 147);
+    color: rgb(59, 37, 44);
+    text-decoration: none;
+    border: 0.2em solid black;
+    border-radius: 1em;
+    padding: 0.25em;
+    text-align: center;
+    font-family: "Consolas";
+    color: rgb(59, 37, 44);
+}
+
+.edit_button:hover {
+    background-color: rgb(210, 163, 214);
+}
+
+.reply {
+    display: grid;
+    grid-template-columns: auto;
+    gap: 0.5em;
+}
+
+.reply_area {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    gap: 0.5em;
+}
+
+.reply #reply_button {
+    grid-row: 3;
+    background-color: rgb(143, 101, 147);
+    font-family: "Consolas";
+    color: rgb(59, 37, 44);
+    text-decoration: none;
+    border: 0.2em solid black;
+    border-radius: 1em;
+    padding: 0.25em;
+    text-align: center;
+    font-family: "Consolas";
+    color: rgb(59, 37, 44);
+}
+
+.reply #reply_button:hover {
+    background-color: rgb(210, 163, 214);
+}
+
+textarea {
+    resize: none;
+}
+
+.exit_button:link, .exit_button:visited {
+    background-color: rgb(143, 101, 147);
+    color: rgb(59, 37, 44);
+    text-decoration: none;
+    border: 0.2em solid black;
+    border-radius: 1em;
+    padding: 0.25em;
+    text-align: center;
+}
+
+.exit_button:hover {
+    background-color: rgb(210, 163, 214);
+}

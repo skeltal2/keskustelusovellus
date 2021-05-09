@@ -1,0 +1,49 @@
+body {
+    margin: auto;
+    max-width: 60em;
+    font-family: "Consolas";
+    color: rgb(59, 37, 44);
+    background-color: rgb(227, 228, 219);
+}
+
+.grid-container {
+    display: grid;
+    grid-template-rows: auto;
+    gap: 1em;
+    margin: 1em;
+}
+
+.edit {
+    grid-row: 1;
+    border: 0.2em solid black;
+    background-color: rgb(205, 205, 205);
+    border-radius: 1em;
+    padding: 1em;
+    margin: 1em;
+    word-wrap: break-word;
+    display: grid;
+    grid-template-rows: auto;
+    gap: 1em;
+}
+
+.edit #button {
+    grid-row: 4;
+    background-color: rgb(143, 101, 147);
+    font-family: "Consolas";
+    color: rgb(59, 37, 44);
+    text-decoration: none;
+    border: 0.2em solid black;
+    border-radius: 1em;
+    padding: 0.25em;
+    text-align: center;
+    font-family: "Consolas";
+    color: rgb(59, 37, 44);
+}
+
+.edit #button:hover {
+    background-color: rgb(210, 163, 214);
+}
+
+textarea {
+    resize: none;
+}
