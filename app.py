@@ -92,7 +92,7 @@ def newuser():
     password_too_short = False
 
     # Password must be longer than 5 characters
-    if len(password) <= 5:
+    if len(password) < 5:
         password_too_short = True
         return redirect("/")
 
@@ -119,13 +119,19 @@ def newuser():
 # Main page for boards
 @app.route("/main")
 def main():
-    sql = "SELECT boards.id, boards.title, COUNT(threads.id) FROM boards LEFT JOIN threads ON threads.board_id = boards.id WHERE boards.hidden = 0 GROUP BY boards.id;"
+    sql = "SELECT boards.id, boards.title FROM boards LEFT JOIN threads ON threads.board_id = boards.id WHERE boards.hidden = 0 GROUP BY boards.id;"
     result = db.session.execute(sql)
     board_data = result.fetchall()
 
     admin = is_admin()
+    boards = []
 
-    return render_template("main.html", boards = board_data, admin = admin)
+    for i in board_data:
+        sql = "SELECT COUNT(*) FROM threads WHERE hidden = 0 and board_id=:board_id;"
+        count = db.session.execute(sql, {"board_id":i[0]}).fetchone()[0]
+        boards.append((i, count))
+
+    return render_template("main.html", boards = boards, admin = admin)
 
 # Manage threads and create page for a board
 @app.route("/main/<int:id>")
@@ -346,6 +352,7 @@ def updatereply():
 
 ### USER MANAGEMENT
 
+# List all users
 @app.route("/users")
 def users():
     if not is_admin():
@@ -356,6 +363,7 @@ def users():
 
         return render_template("users.html", user_data = user_data)
 
+# Make user admin
 @app.route("/makeadmin", methods=["POST"])
 def makeadmin():
     user_id = request.form["user_id"]

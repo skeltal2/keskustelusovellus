@@ -29,13 +29,13 @@
         {% endif %}
         {% for board in boards %}
             <div class="board">
-                <span style="font-size:x-large" class="title">{{ board[1] }}</span>
-                <a class="board_link" href="/main/{{ board[0] }}">Siirry alueelle</a>
-                <p class="count">Keskusteluja: {{ board[2] }}</p>
+                <span style="font-size:x-large" class="title">{{ board[0][1] }}</span>
+                <a class="board_link" href="/main/{{ board[0][0] }}">Siirry alueelle</a>
+                <p class="count">Keskusteluja: {{ board[1] }}</p>
                 {% if admin %}
                     <div class="admin_delete">
                         <form action="/delboard" method="POST">
-                            <input type="hidden" name="board_id" value="{{ board[0] }}">
+                            <input type="hidden" name="board_id" value="{{ board[0][0] }}">
                             <input type="submit" value="(Ylläpitäjä) Poista alue">
                         </form>
                     </div>

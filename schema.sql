@@ -13,8 +13,10 @@ CREATE TABLE boards (
 
 CREATE TABLE threads (
         id SERIAL PRIMARY KEY,
-        title TEXT, content TEXT,
-        user_id INT, board_id INT,
+        title TEXT,
+        content TEXT,
+        user_id INT REFERENCES users (id),
+        board_id INT REFERENCES boards (id),
         created_at TIMESTAMP,
         hidden INT
     );
@@ -22,8 +24,8 @@ CREATE TABLE threads (
 CREATE TABLE messages (
         id SERIAL PRIMARY KEY,
         content TEXT,
-        user_id INT,
-        thread_id INT,
+        user_id INT REFERENCES users (id),
+        thread_id INT REFERENCES threads (id),
         created_at TIMESTAMP,
         hidden INT
     );
